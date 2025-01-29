@@ -1,4 +1,4 @@
-package com.maculuve.conf;
+package com.maculuve.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
