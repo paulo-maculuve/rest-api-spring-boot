@@ -31,3 +31,35 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Logs e Arquivos Temporários
+logs/
+*.log
+hs_err_pid*
+nohup.out
+# Arquivos de build
+*.jar
+*.war
+*.ear
+
+# Arquivos de ambiente (segurança)
+.env
+*.properties
+*.yml
+*.yaml
+src/main/resources/application.yml
+src/main/resources/application.properties
+
+# Arquivos de banco de dados temporários
+*.db
+*.sqlite
+*.h2.db
+*.mv.db
+
+# Arquivos do Docker
+docker-compose.override.yml
+.dockerignore
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
