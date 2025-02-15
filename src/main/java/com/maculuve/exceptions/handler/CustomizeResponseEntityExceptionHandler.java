@@ -12,16 +12,17 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.maculuve.exceptions.ExceptionResponse;
+import com.maculuve.exceptions.InvalidJwtAuthenticationException;
 import com.maculuve.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
 @RestController
 public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-    
+
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handlerAllExceptions(Exception ex, WebRequest webRequest) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
-                new Date(), 
+                new Date(),
                 ex.getMessage(),
                 webRequest.getDescription(false));
 
@@ -32,20 +33,32 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
     public final ResponseEntity<ExceptionResponse> handlerResourceNotFoundExceptions(Exception ex,
             WebRequest webRequest) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
-                new Date(), 
+                new Date(),
                 ex.getMessage(),
                 webRequest.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(RequiredObjectIsNullException.class)
     public final ResponseEntity<ExceptionResponse> handlerBadRequestExceptions(Exception ex,
-                                                                                     WebRequest webRequest) {
+            WebRequest webRequest) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 new Date(),
                 ex.getMessage(),
                 webRequest.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public final ResponseEntity<ExceptionResponse> handlerInvalidJwtAuthenticationExceptions(Exception ex,
+            WebRequest webRequest) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
     }
 }
