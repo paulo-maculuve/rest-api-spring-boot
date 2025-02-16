@@ -1,9 +1,9 @@
-package com.maculuve.data.vo.v1.security;
+package com.maculuve.data.dto.v1.security;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class TokenVO implements Serializable {
+public class TokenDTO implements Serializable {
     private String username;
     private Boolean authenticated;
     private Date created;
@@ -11,7 +11,7 @@ public class TokenVO implements Serializable {
     private String acessToken;
     private String refreshToken;
 
-    public TokenVO(String username, Boolean authenticated, Date created, Date expiration, String acessToken,
+    public TokenDTO(String username, Boolean authenticated, Date created, Date expiration, String acessToken,
             String refreshToken) {
         this.username = username;
         this.authenticated = authenticated;
@@ -21,7 +21,7 @@ public class TokenVO implements Serializable {
         this.refreshToken = refreshToken;
     }
 
-    public TokenVO() {
+    public TokenDTO() {
     }
 
     public String getUsername() {
@@ -93,7 +93,7 @@ public class TokenVO implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        TokenVO other = (TokenVO) obj;
+        TokenDTO other = (TokenDTO) obj;
         if (username == null) {
             if (other.username != null)
                 return false;

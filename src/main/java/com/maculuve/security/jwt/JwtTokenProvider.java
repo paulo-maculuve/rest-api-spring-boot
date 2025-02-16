@@ -17,7 +17,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.maculuve.data.vo.v1.security.TokenVO;
+import com.maculuve.data.dto.v1.security.TokenDTO;
 import com.maculuve.exceptions.InvalidJwtAuthenticationException;
 
 import jakarta.annotation.PostConstruct;
@@ -43,16 +43,16 @@ public class JwtTokenProvider {
         algorithm = Algorithm.HMAC256(secretKey.getBytes());
     }
 
-    public TokenVO createAccessToken(String username, List<String> roles) {
+    public TokenDTO createAccessToken(String username, List<String> roles) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
         var accessToken = getAccessToken(username, roles, now, validity);
         var refreshToken = getRefreshToken(username, roles, now);
 
-        return new TokenVO(username, true, now, validity, accessToken, refreshToken);
+        return new TokenDTO(username, true, now, validity, accessToken, refreshToken);
     }
 
-    public TokenVO refreshToken(String refreshToken) {
+    public TokenDTO refreshToken(String refreshToken) {
         if (refreshToken.contains("Bearer "))
             refreshToken = refreshToken.substring("Bearer ".length());
 

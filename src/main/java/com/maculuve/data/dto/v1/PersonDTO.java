@@ -1,4 +1,4 @@
-package com.maculuve.data.vo.v1;
+package com.maculuve.data.dto.v1;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 import com.github.dozermapper.core.Mapping;
 
 @JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"})
-public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
+public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
     @JsonProperty("id")
     @Mapping("id")
     private Long key;
@@ -79,7 +79,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
             return false;
         if (getClass() != obj.getClass())
             return false;
-        PersonVO other = (PersonVO) obj;
+        PersonDTO other = (PersonDTO) obj;
         if (key == null) {
             if (other.key != null)
                 return false;

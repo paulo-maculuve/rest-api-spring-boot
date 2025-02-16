@@ -13,19 +13,15 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${cors.originPatters:default}")
     private String corsOriginPatters = "";
 
-
-    
     @Override
     public void addCorsMappings(@SuppressWarnings("null") CorsRegistry registry) {
         var allowedOrigins = corsOriginPatters.split(",");
         registry.addMapping("/**")
-        // .allowedMethods("GET", "POST", "PUT")
-        .allowedMethods("*")
-        .allowedOrigins(allowedOrigins)
-        .allowCredentials(true);
+                // .allowedMethods("GET", "POST", "PUT")
+                .allowedMethods("*")
+                .allowedOrigins(allowedOrigins)
+                .allowCredentials(true);
     }
-
-
 
     @Override
     public void configureContentNegotiation(@SuppressWarnings("null") ContentNegotiationConfigurer configurer) {
@@ -34,7 +30,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .useRegisteredExtensionsOnly(false)
                 .defaultContentType(MediaType.APPLICATION_JSON)
                 .mediaType("json", MediaType.APPLICATION_JSON)
-                .mediaType("xml", MediaType.APPLICATION_XML);
+                .mediaType("xml", MediaType.APPLICATION_XML)
+                .mediaType("x-yaml", MediaType.APPLICATION_YAML);
     }
 
 }

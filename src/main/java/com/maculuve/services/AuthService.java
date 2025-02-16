@@ -8,8 +8,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.maculuve.data.vo.v1.security.AccountCredentialsVO;
-import com.maculuve.data.vo.v1.security.TokenVO;
+import com.maculuve.data.dto.v1.security.AccountCredentialsDTO;
+import com.maculuve.data.dto.v1.security.TokenDTO;
 import com.maculuve.repositories.UserRepository;
 import com.maculuve.security.jwt.JwtTokenProvider;
 
@@ -24,7 +24,7 @@ public class AuthService {
     private UserRepository userRepository;
 
     @SuppressWarnings("rawtypes")
-    public ResponseEntity signin(AccountCredentialsVO accountCredentialsVO) {
+    public ResponseEntity signin(AccountCredentialsDTO accountCredentialsVO) {
         try {
             var username = accountCredentialsVO.getUsername();
             var password = accountCredentialsVO.getPassword();
@@ -32,7 +32,7 @@ public class AuthService {
           
             var user = userRepository.findByUsername(username);
            
-            var tokenResponse = new TokenVO();
+            var tokenResponse = new TokenDTO();
             if (user != null) {
                 tokenResponse = jwtTokenProvider.createAccessToken(username, user.getRoles());
             } else {
@@ -49,7 +49,7 @@ public class AuthService {
 	public ResponseEntity refreshToken(String username, String refreshToken) {
 		var user = userRepository.findByUsername(username);
 		
-		var tokenResponse = new TokenVO();
+		var tokenResponse = new TokenDTO();
 		if (user != null) {
 			tokenResponse = jwtTokenProvider.refreshToken(refreshToken);
 		} else {

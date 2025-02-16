@@ -1,12 +1,12 @@
-package com.maculuve.data.vo.v1.security;
+package com.maculuve.data.dto.v1.security;
 
 import java.io.Serializable;
 
-public class AccountCredentialsVO implements Serializable {
+public class AccountCredentialsDTO implements Serializable {
     private String username;
     private String password;
 
-    public AccountCredentialsVO(String username, String password) {
+    public AccountCredentialsDTO(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -44,7 +44,7 @@ public class AccountCredentialsVO implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AccountCredentialsVO other = (AccountCredentialsVO) obj;
+        AccountCredentialsDTO other = (AccountCredentialsDTO) obj;
         if (username == null) {
             if (other.username != null)
                 return false;

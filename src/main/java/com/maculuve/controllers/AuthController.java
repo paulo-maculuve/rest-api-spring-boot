@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maculuve.data.vo.v1.security.AccountCredentialsVO;
+import com.maculuve.data.dto.v1.security.AccountCredentialsDTO;
 import com.maculuve.services.AuthService;
 import com.maculuve.services.UserService;
 
@@ -32,7 +32,7 @@ public class AuthController {
     @SuppressWarnings("rawtypes")
     @Operation(summary = "Authentication a user and retorns a token")
     @PostMapping(value = "/signin")
-    public ResponseEntity sigin(@RequestBody AccountCredentialsVO accountCredentialsVO) {
+    public ResponseEntity sigin(@RequestBody AccountCredentialsDTO accountCredentialsVO) {
         if (checkIfParamsIsNotNull(accountCredentialsVO))
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
         var token = authService.signin(accountCredentialsVO);
@@ -59,7 +59,7 @@ public class AuthController {
                 username == null || username.isBlank();
     }
 
-    private boolean checkIfParamsIsNotNull(AccountCredentialsVO accountCredentialsVO) {
+    private boolean checkIfParamsIsNotNull(AccountCredentialsDTO accountCredentialsVO) {
         return accountCredentialsVO == null || accountCredentialsVO.getUsername() == null
                 || accountCredentialsVO.getPassword() == null || accountCredentialsVO.getPassword().isBlank();
     }

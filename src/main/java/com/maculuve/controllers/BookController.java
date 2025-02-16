@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maculuve.data.vo.v1.BookVO;
+import com.maculuve.data.dto.v1.BookDTO;
 import com.maculuve.services.BookService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,20 +35,20 @@ public class BookController {
         @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
         @Operation(summary = "Finds all Book", description = "Finds all Book", tags = { "Book" }, responses = {
                         @ApiResponse(description = "Success", responseCode = "200", content = {
-                                        @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BookVO.class))) }),
+                                        @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BookDTO.class))) }),
                         @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                         @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                         @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                         @ApiResponse(description = "Internal Server", responseCode = "500", content = @Content)
 
         })
-        public List<BookVO> findAll() {
+        public List<BookDTO> findAll() {
                 return bookService.findAll();
         }
 
         @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
         @Operation(summary = "Finds Book by Id", description = "Finds Book by Id", tags = { "Book" }, responses = {
-                        @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = BookVO.class))),
+                        @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = BookDTO.class))),
                         @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                         @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                         @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
@@ -56,7 +56,7 @@ public class BookController {
                         @ApiResponse(description = "Internal Server", responseCode = "500", content = @Content)
 
         })
-        public BookVO findById(@PathVariable(value = "id") Long id) {
+        public BookDTO findById(@PathVariable(value = "id") Long id) {
                 return bookService.findById(id);
         }
 
@@ -64,14 +64,14 @@ public class BookController {
                         MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
         @Operation(summary = "Adds a new Book", description = "Adds a new Book by passing in a JSON, XML", tags = {
                         "Book" }, responses = {
-                                        @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = BookVO.class))),
+                                        @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = BookDTO.class))),
                                         @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                                         @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                                         @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                                         @ApiResponse(description = "Internal Server", responseCode = "500", content = @Content)
 
         })
-        public BookVO storePerson(@RequestBody BookVO person) {
+        public BookDTO storePerson(@RequestBody BookDTO person) {
                 return bookService.store(person);
         }
 
@@ -79,7 +79,7 @@ public class BookController {
                         MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
         @Operation(summary = "Updated a Book", description = "Update a Book by passing in a JSON, XML", tags = {
                         "Book" }, responses = {
-                                        @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = BookVO.class))),
+                                        @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = BookDTO.class))),
                                         @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                                         @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                                         @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
@@ -87,7 +87,7 @@ public class BookController {
                                         @ApiResponse(description = "Internal Server", responseCode = "500", content = @Content)
 
         })
-        public BookVO update(@RequestBody BookVO person) {
+        public BookDTO update(@RequestBody BookDTO person) {
                 return bookService.update(person);
         }
 
@@ -95,7 +95,7 @@ public class BookController {
                         MediaType.APPLICATION_XML_VALUE })
         @Operation(summary = "Delete a  Book", description = "Delete a new Book by passing in a JSON, XML", tags = {
                         "Book" }, responses = {
-                                        @ApiResponse(description = "No Content", responseCode = "204", content = @Content(schema = @Schema(implementation = BookVO.class))),
+                                        @ApiResponse(description = "No Content", responseCode = "204", content = @Content(schema = @Schema(implementation = BookDTO.class))),
                                         @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                                         @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                                         @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),

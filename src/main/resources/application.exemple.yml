@@ -7,7 +7,7 @@ cors:
 spring:
    datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/<YOUR_DB>?createDatabaseIfNotExist=true
+      url: jdbc:mysql://localhost:3306/<YOUR_DB>?createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC
       username: <USERNAME_DB>
       password: <PASSWORD>
    jpa:
@@ -17,6 +17,10 @@ spring:
         hibernate:
            dialect: org.hibernate.dialect.MySQLDialect
         show-sql: false
+logging:
+   level:
+      # root: WARN
+      com.maculuve: DEGUG
 springdoc:
    pathsToMatch: 
       -  /auth/**

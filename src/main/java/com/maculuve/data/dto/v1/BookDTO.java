@@ -1,4 +1,4 @@
-package com.maculuve.data.vo.v1;
+package com.maculuve.data.dto.v1;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 @JsonPropertyOrder({"id", "author", "title", "launchDate", "price"}) 
-public class BookVO extends RepresentationModel<PersonVO> implements Serializable {
+public class BookDTO extends RepresentationModel<PersonDTO> implements Serializable {
     @JsonProperty("id")
     @Mapping("id")
     private Long key;
@@ -80,7 +80,7 @@ public class BookVO extends RepresentationModel<PersonVO> implements Serializabl
             return false;
         if (getClass() != obj.getClass())
             return false;
-        BookVO other = (BookVO) obj;
+        BookDTO other = (BookDTO) obj;
         if (key == null) {
             if (other.key != null)
                 return false;
