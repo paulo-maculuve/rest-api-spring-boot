@@ -8,7 +8,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"})
+@JsonPropertyOrder({ "id", "firstName", "lastName", "address", "gender", "enabled" })
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
     @JsonProperty("id")
     @Mapping("id")
@@ -17,7 +17,8 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
     private String lastName;
     private String address;
     private String gender;
- 
+    private Boolean enabled;
+
     public Long getKey() {
         return key;
     }
@@ -25,6 +26,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
     public void setKey(Long key) {
         this.key = key;
     }
+
     public String getFirstName() {
         return firstName;
     }
@@ -57,7 +59,13 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
         this.gender = gender;
     }
 
-   
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
     @Override
     public int hashCode() {
@@ -68,6 +76,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((address == null) ? 0 : address.hashCode());
         result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+        result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
         return result;
     }
 
@@ -105,9 +114,12 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
                 return false;
         } else if (!gender.equals(other.gender))
             return false;
+        if (enabled == null) {
+            if (other.enabled != null)
+                return false;
+        } else if (!enabled.equals(other.enabled))
+            return false;
         return true;
     }
-
-    
 
 }

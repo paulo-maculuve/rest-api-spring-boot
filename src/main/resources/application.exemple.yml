@@ -20,7 +20,7 @@ spring:
 logging:
    level:
       # root: WARN
-      com.maculuve: DEGUG
+      com.maculuve: DEBUG
 springdoc:
    pathsToMatch: 
       -  /auth/**

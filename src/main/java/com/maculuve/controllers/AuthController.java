@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.maculuve.controllers.docs.AuthControllerDocs;
 import com.maculuve.data.dto.v1.security.AccountCredentialsDTO;
 import com.maculuve.services.AuthService;
 import com.maculuve.services.UserService;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Authentication Endpoint")
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthController implements AuthControllerDocs {
 
     @Autowired
     private AuthService authService;
@@ -30,8 +30,8 @@ public class AuthController {
     UserService service;
 
     @SuppressWarnings("rawtypes")
-    @Operation(summary = "Authentication a user and retorns a token")
     @PostMapping(value = "/signin")
+    @Override
     public ResponseEntity sigin(@RequestBody AccountCredentialsDTO accountCredentialsVO) {
         if (checkIfParamsIsNotNull(accountCredentialsVO))
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
@@ -42,8 +42,8 @@ public class AuthController {
     }
 
     @SuppressWarnings("rawtypes")
-    @Operation(summary = "Refresh token for authenticated user and returns a token")
     @PutMapping(value = "/refresh/{username}")
+    @Override
     public ResponseEntity refreshToken(@PathVariable("username") String username,
             @RequestHeader("Authorization") String refreshToken) {
         if (checkIfParamsIsNotNull(username, refreshToken))

@@ -15,14 +15,14 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class JwtTokenFilter extends GenericFilterBean {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
 
-    public JwtTokenFilter(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+	public JwtTokenFilter(JwtTokenProvider jwtTokenProvider) {
+		this.jwtTokenProvider = jwtTokenProvider;
+	}
 
-    @Override
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
@@ -35,6 +35,5 @@ public class JwtTokenFilter extends GenericFilterBean {
 		chain.doFilter(request, response);
 
 	}
-
 
 }
