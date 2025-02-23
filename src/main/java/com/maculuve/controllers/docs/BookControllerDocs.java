@@ -1,10 +1,11 @@
 package com.maculuve.controllers.docs;
 
-import java.util.List;
-
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.maculuve.data.dto.v1.BookDTO;
 
@@ -24,7 +25,12 @@ public interface BookControllerDocs {
             @ApiResponse(description = "Internal Server", responseCode = "500", content = @Content)
 
     })
-    public List<BookDTO> findAll();
+    public ResponseEntity<PagedModel<EntityModel<BookDTO>>> findAll(
+        @RequestParam(value = "page", defaultValue = "0") Integer page,
+        @RequestParam(value = "size", defaultValue =  "15") Integer size,
+        @RequestParam(value = "direction", defaultValue =  "asc") String direction
+    );
+
 
     @Operation(summary = "Finds Book by Id", description = "Finds Book by Id", tags = { "Book" }, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = BookDTO.class))),

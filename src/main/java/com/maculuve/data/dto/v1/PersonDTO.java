@@ -5,9 +5,10 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.github.dozermapper.core.Mapping;
-
+@Relation(collectionRelation = "people")
 @JsonPropertyOrder({ "id", "firstName", "lastName", "address", "gender", "enabled" })
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
     @JsonProperty("id")

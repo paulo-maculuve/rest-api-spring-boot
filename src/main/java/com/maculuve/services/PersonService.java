@@ -1,21 +1,24 @@
 package com.maculuve.services;
 
+import static com.maculuve.mapper.DozerMapper.parseObject;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static com.maculuve.mapper.DozerMapper.parseObject;
-import static com.maculuve.mapper.DozerMapper.parseListObject;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
 import com.maculuve.controllers.PersonController;
 import com.maculuve.data.dto.v1.PersonDTO;
 import com.maculuve.exceptions.RequiredObjectIsNullException;
 import com.maculuve.exceptions.ResourceNotFoundException;
-
 import com.maculuve.model.Person;
 import com.maculuve.repositories.PersonRepository;
 
@@ -28,10 +31,34 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public List<PersonDTO> findAll() {
-        var persons = parseListObject(personRepository.findAll(), PersonDTO.class);
-        persons.forEach(this::addHateoasLinks);
-        return persons;
+    @SuppressWarnings("rawtypes")
+    @Autowired
+    private PagedResourcesAssembler assembler;
+
+    @SuppressWarnings("unchecked")
+    public PagedModel<EntityModel<PersonDTO>> findAll(Pageable pageable) {
+
+        var people = personRepository.findAll(pageable);
+        var peopleWithLinks = people.map(person -> {
+            var dto = parseObject(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
+        Link findAllLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PersonController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), String.valueOf(pageable.getSort()))).withSelfRel();
+        return assembler.toModel(peopleWithLinks, findAllLink);
+    }
+
+    @SuppressWarnings("unchecked")
+    public PagedModel<EntityModel<PersonDTO>> findByName(String firstName, Pageable pageable) {
+        logger.info("Find person by firstName");
+        var people = personRepository.findPeopleByName(firstName, pageable);
+        var peopleWithLinks = people.map(person -> {
+            var dto = parseObject(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
+        Link findAllLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PersonController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), String.valueOf(pageable.getSort()))).withSelfRel();
+        return assembler.toModel(peopleWithLinks, findAllLink);
     }
 
     public PersonDTO findById(Long id) {
@@ -89,17 +116,15 @@ public class PersonService {
         personRepository.delete(entity);
     }
 
+    //@formatter:off
     private void addHateoasLinks(PersonDTO personDTO) {
-        personDTO.add(
-                linkTo(methodOn(PersonController.class).findById(personDTO.getKey())).withSelfRel().withType("GET"));
-        personDTO.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
-        personDTO
-                .add(linkTo(methodOn(PersonController.class).store(personDTO)).withRel("store").withType("POST"));
+        personDTO.add(linkTo(methodOn(PersonController.class).findById(personDTO.getKey())).withSelfRel().withType("GET"));
+        personDTO.add(linkTo(methodOn(PersonController.class).findAll(0, 15, "asc")).withRel("findAll").withType("GET"));
+        personDTO.add(linkTo(methodOn(PersonController.class).store(personDTO)).withRel("store").withType("POST"));
         personDTO.add(linkTo(methodOn(PersonController.class).update(personDTO)).withRel("update").withType("PUT"));
-        personDTO.add(linkTo(methodOn(PersonController.class).disablePerson(personDTO.getKey())).withRel("disable")
-                .withType("PATCH"));
-        personDTO.add(linkTo(methodOn(PersonController.class).delete(personDTO.getKey())).withRel("delete")
-                .withType("DELETE"));
+        personDTO.add(linkTo(methodOn(PersonController.class).disablePerson(personDTO.getKey())).withRel("disable").withType("PATCH"));
+        personDTO.add(linkTo(methodOn(PersonController.class).delete(personDTO.getKey())).withRel("delete").withType("DELETE"));
     }
+    //@formatter:on
 
 }
