@@ -1,4 +1,4 @@
-package com.maculuve.importer.contract;
+package com.maculuve.file.importer.contract;
 
 import java.io.InputStream;
 import java.util.List;

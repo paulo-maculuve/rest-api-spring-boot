@@ -27,6 +27,7 @@ public class ObjectMapperTests {
         assertEquals("Last Name Test0", output.getLastName());
         assertEquals("Address Test0", output.getAddress());
         assertEquals("Male", output.getGender());
+        assertEquals(true, output.getEnabled());
     }
 
     @Test
@@ -39,6 +40,8 @@ public class ObjectMapperTests {
         assertEquals("Last Name Test0", outputZero.getLastName());
         assertEquals("Address Test0", outputZero.getAddress());
         assertEquals("Male", outputZero.getGender());
+        assertEquals(true, outputZero.getEnabled());
+
 
         PersonDTO outputSeven = outputList.get(7);
 
@@ -47,6 +50,8 @@ public class ObjectMapperTests {
         assertEquals("Last Name Test7", outputSeven.getLastName());
         assertEquals("Address Test7", outputSeven.getAddress());
         assertEquals("Female", outputSeven.getGender());
+        assertEquals(true, outputSeven.getEnabled());
+
 
         PersonDTO outputTwelve = outputList.get(12);
 
@@ -55,6 +60,7 @@ public class ObjectMapperTests {
         assertEquals("Last Name Test12", outputTwelve.getLastName());
         assertEquals("Address Test12", outputTwelve.getAddress());
         assertEquals("Male", outputTwelve.getGender());
+        assertEquals(true, outputTwelve.getEnabled());
     }
 
     @Test
@@ -65,6 +71,7 @@ public class ObjectMapperTests {
         assertEquals("Last Name Test0", output.getLastName());
         assertEquals("Address Test0", output.getAddress());
         assertEquals("Male", output.getGender());
+        assertEquals(false, output.getEnabled());
     }
 
     @Test
@@ -77,6 +84,8 @@ public class ObjectMapperTests {
         assertEquals("Last Name Test0", outputZero.getLastName());
         assertEquals("Address Test0", outputZero.getAddress());
         assertEquals("Male", outputZero.getGender());
+        assertEquals("Male", outputZero.getGender());
+        assertEquals(false, outputZero.getEnabled());
 
         Person outputSeven = outputList.get(7);
 
@@ -85,6 +94,7 @@ public class ObjectMapperTests {
         assertEquals("Last Name Test7", outputSeven.getLastName());
         assertEquals("Address Test7", outputSeven.getAddress());
         assertEquals("Female", outputSeven.getGender());
+        assertEquals(false, outputSeven.getEnabled());
 
         Person outputTwelve = outputList.get(12);
 
@@ -93,5 +103,6 @@ public class ObjectMapperTests {
         assertEquals("Last Name Test12", outputTwelve.getLastName());
         assertEquals("Address Test12", outputTwelve.getAddress());
         assertEquals("Male", outputTwelve.getGender());
+        assertEquals(false, outputTwelve.getEnabled());
     }
 }

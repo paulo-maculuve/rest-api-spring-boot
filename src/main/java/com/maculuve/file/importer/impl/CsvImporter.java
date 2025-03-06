@@ -1,4 +1,4 @@
-package com.maculuve.importer.impl;
+package com.maculuve.file.importer.impl;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,7 +10,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
 
 import com.maculuve.data.dto.v1.PersonDTO;
-import com.maculuve.importer.contract.FileImporter;
+import com.maculuve.file.importer.contract.FileImporter;
 
 @Component
 public class CsvImporter implements FileImporter {
@@ -36,6 +36,7 @@ public class CsvImporter implements FileImporter {
             personDTO.setLastName(csvRecord.get("last_name"));
             personDTO.setAddress(csvRecord.get("address"));
             personDTO.setGender(csvRecord.get("gender"));
+            personDTO.setEnabled(true);
             people.add(personDTO);
         }
         return people;

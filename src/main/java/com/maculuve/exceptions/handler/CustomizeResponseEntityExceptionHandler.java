@@ -43,16 +43,16 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
                 return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
         }
 
-        @ExceptionHandler(InvalidJwtAuthenticationException.class)
-        public final ResponseEntity<ExceptionResponse> handlerInvalidJwtAuthenticationExceptions(Exception ex,
-                        WebRequest webRequest) {
-                ExceptionResponse exceptionResponse = new ExceptionResponse(
-                                new Date(),
-                                ex.getMessage(),
-                                webRequest.getDescription(false));
+        // @ExceptionHandler(InvalidJwtAuthenticationException.class)
+        // public final ResponseEntity<ExceptionResponse> handlerInvalidJwtAuthenticationExceptions(Exception ex,
+        //                 WebRequest webRequest) {
+        //         ExceptionResponse exceptionResponse = new ExceptionResponse(
+        //                         new Date(),
+        //                         ex.getMessage(),
+        //                         webRequest.getDescription(false));
 
-                return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
-        }
+        //         return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+        // }
 
         @ExceptionHandler(RequiredObjectIsNullException.class)
         public final ResponseEntity<ExceptionResponse> handlerRequiredObjectIsNullExceptions(Exception ex,
