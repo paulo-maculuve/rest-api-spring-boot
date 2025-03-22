@@ -38,10 +38,11 @@ public interface PersonControllerDocs {
                         @RequestParam(value = "size", defaultValue = "15") Integer size,
                         @RequestParam(value = "direction", defaultValue = "asc") String direction);
 
-        @Operation(summary = "Export People", description = "Export page of People in XLSX and CSV format", tags = { "People" }, responses = {
+        @Operation(summary = "Export People", description = "Export page of People in XLSX, CSV and PDF format", tags = { "People" }, responses = {
                         @ApiResponse(description = "Success", responseCode = "200", content = {
                                         @Content(mediaType = MediaTypes.APPLICATION_XLSX_VALUE),
-                                        @Content(mediaType = MediaTypes.APPLICATION_CSV_VALUE)
+                                        @Content(mediaType = MediaTypes.APPLICATION_CSV_VALUE),
+                                        @Content(mediaType = MediaTypes.APPLICATION_PDF_VALUE)
                         }),
                         @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                         @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),

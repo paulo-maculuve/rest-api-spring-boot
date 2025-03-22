@@ -36,7 +36,7 @@ public class XlsxExporter implements FileExporter {
                 int rowIndex = 1;
                 for (PersonDTO person : people) {
                     Row row = sheet.createRow(rowIndex++);
-                    row.createCell(0).setCellValue(person.getKey());
+                    row.createCell(0).setCellValue(person.getId());
                     row.createCell(1).setCellValue(person.getFirstName());
                     row.createCell(2).setCellValue(person.getLastName());
                     row.createCell(3).setCellValue(person.getAddress());

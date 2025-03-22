@@ -8,6 +8,7 @@ import com.maculuve.exceptions.BadRequestException;
 import com.maculuve.file.exporter.MediaTypes;
 import com.maculuve.file.exporter.contract.FileExporter;
 import com.maculuve.file.exporter.impl.CsvExporter;
+import com.maculuve.file.exporter.impl.PdfExporter;
 import com.maculuve.file.exporter.impl.XlsxExporter;
 
 @Component
@@ -21,6 +22,8 @@ public class FileExporterFactory {
             return applicationContext.getBean(XlsxExporter.class);
         } else if (acceptHeader.equalsIgnoreCase(MediaTypes.APPLICATION_CSV_VALUE)) {
             return applicationContext.getBean(CsvExporter.class);
+        } else if (acceptHeader.equalsIgnoreCase(MediaTypes.APPLICATION_PDF_VALUE)) {
+            return applicationContext.getBean(PdfExporter.class);
         } else {
             throw new BadRequestException("Invalid File Format");
         }

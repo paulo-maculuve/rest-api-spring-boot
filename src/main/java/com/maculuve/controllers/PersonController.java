@@ -1,6 +1,7 @@
 package com.maculuve.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -55,7 +56,8 @@ public class PersonController implements PersonControllerDocs {
         }
 
         @GetMapping(value = "/exportPage", produces = { MediaTypes.APPLICATION_CSV_VALUE,
-                        MediaTypes.APPLICATION_XLSX_VALUE })
+                        MediaTypes.APPLICATION_XLSX_VALUE,
+                        MediaTypes.APPLICATION_PDF_VALUE })
         @Override
         public ResponseEntity<Resource> exportPage(
                         @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -69,9 +71,15 @@ public class PersonController implements PersonControllerDocs {
 
                 Resource file = personService.exportPage(pageable, acceptHeader);
 
+                Map<String, String> extensionMap = Map.of(
+                        MediaTypes.APPLICATION_XLSX_VALUE, ".xlsx",
+                        MediaTypes.APPLICATION_CSV_VALUE, ".csv",
+                        MediaTypes.APPLICATION_PDF_VALUE, ".pdf"
 
+                );
+
+                var fileExtension = extensionMap.getOrDefault(acceptHeader, "");
                 var contentType = acceptHeader != null ? acceptHeader : "application/octet-stream";
-                var fileExtension = MediaTypes.APPLICATION_XLSX_VALUE.equalsIgnoreCase(acceptHeader) ? ".xlsx" : ".csv";
                 var filename = "people_exported" + fileExtension;
 
                 return ResponseEntity.ok()

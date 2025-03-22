@@ -127,7 +127,7 @@ public class PersonService {
     public PersonDTO update(PersonDTO person) {
         if (person == null)
             throw new RequiredObjectIsNullException();
-        var entity = personRepository.findById(person.getKey())
+        var entity = personRepository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
         entity.setFirstName(person.getFirstName());
@@ -161,14 +161,14 @@ public class PersonService {
 
     //@formatter:off
     private void addHateoasLinks(PersonDTO personDTO) {
-        personDTO.add(linkTo(methodOn(PersonController.class).findById(personDTO.getKey())).withSelfRel().withType("GET"));
+        personDTO.add(linkTo(methodOn(PersonController.class).findById(personDTO.getId())).withSelfRel().withType("GET"));
         personDTO.add(linkTo(methodOn(PersonController.class).findAll(0, 15, "asc")).withRel("findAll").withType("GET"));
         personDTO.add(linkTo(methodOn(PersonController.class).findByName("", 0, 15, "asc")).withRel("findByName").withType("GET"));
         personDTO.add(linkTo(methodOn(PersonController.class).store(personDTO)).withRel("store").withType("POST"));
         personDTO.add(linkTo(methodOn(PersonController.class)).slash(personDTO).withRel("multCreation").withType("POST"));
         personDTO.add(linkTo(methodOn(PersonController.class).update(personDTO)).withRel("update").withType("PUT"));
-        personDTO.add(linkTo(methodOn(PersonController.class).disablePerson(personDTO.getKey())).withRel("disable").withType("PATCH"));
-        personDTO.add(linkTo(methodOn(PersonController.class).delete(personDTO.getKey())).withRel("delete").withType("DELETE"));
+        personDTO.add(linkTo(methodOn(PersonController.class).disablePerson(personDTO.getId())).withRel("disable").withType("PATCH"));
+        personDTO.add(linkTo(methodOn(PersonController.class).delete(personDTO.getId())).withRel("delete").withType("DELETE"));
         personDTO.add(linkTo(methodOn(PersonController.class).exportPage(1, 12, "asc", null)).withRel("exportPage").withType("GET").withTitle("Export People")
     );
     }

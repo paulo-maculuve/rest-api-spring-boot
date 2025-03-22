@@ -29,7 +29,7 @@ public class CsvExporter implements FileExporter {
         try (CSVPrinter csvPrinter = new CSVPrinter(outputStreamWriter, csvFormat)) {
             for (PersonDTO person : people) {
                 csvPrinter.printRecord(
-                        person.getKey(),
+                        person.getId(),
                         person.getFirstName(),
                         person.getLastName(),
                         person.getAddress(),
