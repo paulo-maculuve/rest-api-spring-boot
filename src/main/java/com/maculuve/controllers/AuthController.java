@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Authentication Endpoint")
 @RestController
 @RequestMapping("/auth")
-public class AuthController /*implements AuthControllerDocs*/ {
+public class AuthController implements AuthControllerDocs {
 
     @Autowired
     private AuthService authService;
@@ -29,30 +29,27 @@ public class AuthController /*implements AuthControllerDocs*/ {
     @Autowired
     UserService service;
 
-    // @SuppressWarnings("rawtypes")
-    // @PostMapping(value = "/signin")
-    // @Override
-    // public ResponseEntity sigin(@RequestBody AccountCredentialsDTO accountCredentialsVO) {
-    //     if (checkIfParamsIsNotNull(accountCredentialsVO))
-    //         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-    //     var token = authService.signin(accountCredentialsVO);
-    //     if (token == null)
-    //         ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-    //     return token;
-    // }
+    @PostMapping(value = "/signin")
+    @Override
+    public  ResponseEntity<?> sigin(@RequestBody AccountCredentialsDTO accountCredentialsVO) {
+        if (checkIfParamsIsNotNull(accountCredentialsVO)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+       
+        var token = authService.signin(accountCredentialsVO);
+        if (token == null) ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+        return ResponseEntity.ok().body(token);
+    }
 
-    // @SuppressWarnings("rawtypes")
-    // @PutMapping(value = "/refresh/{username}")
-    // @Override
-    // public ResponseEntity refreshToken(@PathVariable("username") String username,
-    //         @RequestHeader("Authorization") String refreshToken) {
-    //     if (checkIfParamsIsNotNull(username, refreshToken))
-    //         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-    //     var token = authService.refreshToken(username, refreshToken);
-    //     if (token == null)
-    //         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-    //     return token;
-    // }
+    @PutMapping(value = "/refresh/{username}")
+    @Override
+    public  ResponseEntity<?> refreshToken(@PathVariable("username") String username,
+            @RequestHeader("Authorization") String refreshToken) {
+        if (checkIfParamsIsNotNull(username, refreshToken))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+        var token = authService.refreshToken(username, refreshToken);
+        if (token == null)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+        return ResponseEntity.ok().body(token);
+    }
 
     private boolean checkIfParamsIsNotNull(String username, String refreshToken) {
         return refreshToken == null || refreshToken.isBlank() ||
