@@ -2,6 +2,7 @@ package com.maculuve.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,25 +32,35 @@ public class AuthController implements AuthControllerDocs {
 
     @PostMapping(value = "/signin")
     @Override
-    public  ResponseEntity<?> sigin(@RequestBody AccountCredentialsDTO accountCredentialsVO) {
-        if (checkIfParamsIsNotNull(accountCredentialsVO)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-       
-        var token = authService.signin(accountCredentialsVO);
-        if (token == null) ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+    public ResponseEntity<?> sigin(@RequestBody AccountCredentialsDTO accountCredentialsVO) {
+        if (checkIfParamsIsNotNull(accountCredentialsVO))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+
+        var token = authService.signIn(accountCredentialsVO);
+        if (token == null)
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
         return ResponseEntity.ok().body(token);
     }
 
     @PutMapping(value = "/refresh/{username}")
     @Override
-    public  ResponseEntity<?> refreshToken(@PathVariable("username") String username,
+    public ResponseEntity<?> refreshToken(@PathVariable("username") String username,
             @RequestHeader("Authorization") String refreshToken) {
         if (checkIfParamsIsNotNull(username, refreshToken))
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
         var token = authService.refreshToken(username, refreshToken);
-        if (token == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+        if (token == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
         return ResponseEntity.ok().body(token);
     }
+
+           @PostMapping(value = "/createUser", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE,
+                        MediaType.APPLICATION_YAML_VALUE }, produces = {
+                                        MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE,
+                                        MediaType.APPLICATION_YAML_VALUE })
+       
+        public AccountCredentialsDTO create(@RequestBody AccountCredentialsDTO credentials) {
+                return authService.create(credentials);
+        }
 
     private boolean checkIfParamsIsNotNull(String username, String refreshToken) {
         return refreshToken == null || refreshToken.isBlank() ||

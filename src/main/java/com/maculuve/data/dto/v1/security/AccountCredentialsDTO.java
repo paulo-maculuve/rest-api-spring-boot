@@ -4,10 +4,15 @@ import java.io.Serializable;
 
 public class AccountCredentialsDTO implements Serializable {
     private String username;
+    private String fullName;
     private String password;
 
-    public AccountCredentialsDTO(String username, String password) {
+    public AccountCredentialsDTO() {
+    }
+
+    public AccountCredentialsDTO(String username,String password,  String fullName) {
         this.username = username;
+        this.fullName = fullName;
         this.password = password;
     }
 
@@ -19,6 +24,14 @@ public class AccountCredentialsDTO implements Serializable {
         this.username = username;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -27,12 +40,15 @@ public class AccountCredentialsDTO implements Serializable {
         this.password = password;
     }
 
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((username == null) ? 0 : username.hashCode());
+        result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
+     
         return result;
     }
 
@@ -49,6 +65,11 @@ public class AccountCredentialsDTO implements Serializable {
             if (other.username != null)
                 return false;
         } else if (!username.equals(other.username))
+            return false;
+        if (fullName == null) {
+            if (other.fullName != null)
+                return false;
+        } else if (!fullName.equals(other.fullName))
             return false;
         if (password == null) {
             if (other.password != null)

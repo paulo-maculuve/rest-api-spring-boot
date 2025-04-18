@@ -35,7 +35,7 @@ public class User  implements UserDetails  {
     @Column(name = "account_non_locked")
     private Boolean accountNonLocked;
     @Column(name = "credentials_non_expired", nullable = false)
-    private Boolean credentialsNonEexpired;
+    private Boolean credentialsNonExpired;
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -80,7 +80,7 @@ public class User  implements UserDetails  {
     }
 
     public boolean isCredentialsNonExpired() {
-        return this.credentialsNonEexpired;
+        return this.credentialsNonExpired;
     }
 
     public boolean isEnabled() {
@@ -131,12 +131,12 @@ public class User  implements UserDetails  {
         this.accountNonLocked = accountNonLocked;
     }
 
-    public Boolean getCredentialsNonEexpired() {
-        return credentialsNonEexpired;
+    public Boolean getCredentialsNonExpired() {
+        return credentialsNonExpired;
     }
 
-    public void setCredentialsNonEexpired(Boolean credentialsNonEexpired) {
-        this.credentialsNonEexpired = credentialsNonEexpired;
+    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
     }
 
     public Boolean getEnabled() {
@@ -165,7 +165,7 @@ public class User  implements UserDetails  {
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + ((accountNonExpired == null) ? 0 : accountNonExpired.hashCode());
         result = prime * result + ((accountNonLocked == null) ? 0 : accountNonLocked.hashCode());
-        result = prime * result + ((credentialsNonEexpired == null) ? 0 : credentialsNonEexpired.hashCode());
+        result = prime * result + ((credentialsNonExpired == null) ? 0 : credentialsNonExpired.hashCode());
         result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
         result = prime * result + ((permissions == null) ? 0 : permissions.hashCode());
         return result;
@@ -210,10 +210,10 @@ public class User  implements UserDetails  {
                 return false;
         } else if (!accountNonLocked.equals(other.accountNonLocked))
             return false;
-        if (credentialsNonEexpired == null) {
-            if (other.credentialsNonEexpired != null)
+        if (credentialsNonExpired == null) {
+            if (other.credentialsNonExpired != null)
                 return false;
-        } else if (!credentialsNonEexpired.equals(other.credentialsNonEexpired))
+        } else if (!credentialsNonExpired.equals(other.credentialsNonExpired))
             return false;
         if (enabled == null) {
             if (other.enabled != null)
