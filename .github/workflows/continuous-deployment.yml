@@ -1,4 +1,4 @@
-name: Continuous Integration and Delivery with Github Actions
+${{ github.run_id }}name: Continuous Integration and Delivery with Github Actions
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
 
     - name: Push to Docker Hub Container Registry
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/rest-api-spring-boot:latest ${{ secrets.DOCKER_USERNAME }}/rest-api-spring-boot:ghjid
+        docker tag ${{ secrets.DOCKER_USERNAME }}/rest-api-spring-boot:latest ${{ secrets.DOCKER_USERNAME }}/rest-api-spring-boot:${{ github.run_id }}
 
         docker push ${{ secrets.DOCKER_USERNAME }}/rest-api-spring-boot:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/rest-api-spring-boot:${{ github.run_id }}
