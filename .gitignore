@@ -44,11 +44,6 @@ nohup.out
 
 # Arquivos de ambiente (segurança)
 .env
-*.properties
-*.yml
-*.yaml
-src/main/resources/application.yml
-src/main/resources/application.properties
 
 # Arquivos de banco de dados temporários
 *.db

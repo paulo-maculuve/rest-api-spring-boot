@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  db:
+    image: mysql:9.2.0
+    environment:
+      TZ: Africa/Maputo
+      MYSQL_ROOT_PASSWORD: docker
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: admin123
+      MYSQL_DATABASE: rest_spring_boot_api
+    ports:
+      - "3308:3306"
+    expose:
+      - 3306
+    networks:
+      - pm-network
+  rest-api-spring-boot:
+    image: paulomaculuve/rest-api-spring-boot
+    build: .
+    working_dir: /api-rest
+  
+    environment:
+      TZ: Africa/Maputo
+      SPRING.DATASOURCE.URL: jdbc:mysql://db:3306/rest_spring_boot_api?createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=Africa/Maputo
+      SPRING.DATASOURCE.USERNAME: docker
+      SPRING.DATASOURCE.PASSWORD: admin123
+    command: mvn spring-boot:run
+    depends_on:
+      - db
+
+    ports:
+      - 80:80
+    networks:
+      - pm-network
+networks:
+    pm-network:
+      driver: bridge
