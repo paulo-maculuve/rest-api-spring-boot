@@ -30,7 +30,7 @@ jobs:
 
     - name: Docker Compose Build
       working-directory: .
-      run: docker composer build
+      run: docker compose build
 
     - name: Push to Docker Hub Container Registry
       run: |
