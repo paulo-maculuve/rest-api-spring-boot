@@ -25,11 +25,11 @@ jobs:
         canche: maven
 
     - name: Build Application .jar
-      working-directory: /rest-api-spring-boot
+      working-directory: .
       run: mvn clean package
 
     - name: Docker Compose Build
-      working-directory: /rest-api-spring-boot
+      working-directory: .
       run: docker composer build
 
     - name: Push to Docker Hub Container Registry
